@@ -2,10 +2,9 @@ package org.springframework.samples.mvc.messageconverters;
 
 import javax.validation.Valid;
 
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import com.rometools.rome.feed.atom.Feed;
+import com.rometools.rome.feed.rss.Channel;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -14,9 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.sun.syndication.feed.atom.Feed;
-import com.sun.syndication.feed.rss.Channel;
 
 @Controller
 @RequestMapping("/messageconverters")
@@ -69,11 +65,8 @@ public class MessageConvertersController {
 	}
 
 	@RequestMapping(value="/json", method=RequestMethod.GET)
-	public ResponseEntity<JavaBean> writeJson() {
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.TEXT_PLAIN);
-		return new ResponseEntity<JavaBean>(new JavaBean("bar", "apple"), headers , HttpStatus.OK);
-//		return new JavaBean("bar", "apple");
+	public @ResponseBody JavaBean writeJson() {
+		return new JavaBean("bar", "apple");
 	}
 
 	// AtomFeedHttpMessageConverter (requires Rome on the classpath - useful for serving Atom feeds)
